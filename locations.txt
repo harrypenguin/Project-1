@@ -4,7 +4,7 @@ That way is blocked.
 That way is blocked.
 END
 
-LOCATION 1
+LOCATION 1 (front campus)
 0
 You are on the first floor of the Robarts Library. There is an empty study room to the South, an exit from the library to the East.
 You are on the first floor of the Robarts Library. It's usually crowded at this time of the day, but today it's eerily quiet.
@@ -12,92 +12,86 @@ Only a few students are studying inside one of the study rooms. You better not d
 service desk, looking bored and sleepy. There is an empty study room to the South, an exit from the library to the East.
 END
 
-LOCATION 2
+LOCATION 2 (garden)
 0
 This study room is completely empty.
 You are in an empty study room. And by empty, we mean, absolutely empty. All the tables and chairs have been taken out,
 the whiteboards taken off the wall, not even the carpeting is left. Are they planning to do something else with this space?
 END
 
-LOCATION 3
+LOCATION 3 (UC)
 0
 You are outside the Robarts library.
 You are outside the Robarts library on a crowded street. There is a smell of coffee in the air.
 END
 
-LOCATION 4
+LOCATION 4 (Myhal)
 0
 You are outside the Robarts library.
 You are outside the Robarts library on a crowded street. There is a smell of coffee in the air.
 END
 
-LOCATION 5
+LOCATION 5 (Con hall)
 0
 You are outside the Robarts library.
 You are outside the Robarts library on a crowded street. There is a smell of coffee in the air.
 END
 
-LOCATION 6
+LOCATION 6 (Road)
 0
 You are outside the Robarts library.
 You are outside the Robarts library on a crowded street. There is a smell of coffee in the air.
 END
 
-LOCATION 7
+LOCATION 7 (Gerstein)
 0
 You are outside the Robarts library.
 You are outside the Robarts library on a crowded street. There is a smell of coffee in the air.
 END
 
-LOCATION 8
+LOCATION 8 (Basement)
 0
 You are outside the Robarts library.
 You are outside the Robarts library on a crowded street. There is a smell of coffee in the air.
 END
 
-LOCATION 9
+LOCATION 9 (Elevator)
 0
 You are outside the Robarts library.
 You are outside the Robarts library on a crowded street. There is a smell of coffee in the air.
 END
 
-LOCATION 10
+LOCATION 10 (second floor)
 0
 You are outside the Robarts library.
 You are outside the Robarts library on a crowded street. There is a smell of coffee in the air.
 END
 
-LOCATION 11
+LOCATION 11 (stairs)
 0
 You are outside the Robarts library.
 You are outside the Robarts library on a crowded street. There is a smell of coffee in the air.
 END
 
-LOCATION 12
+LOCATION 12 (road/park)
 0
 You are outside the Robarts library.
 You are outside the Robarts library on a crowded street. There is a smell of coffee in the air.
 END
 
-LOCATION 13
+LOCATION 13 (construction)
 0
 You are outside the Robarts library.
 You are outside the Robarts library on a crowded street. There is a smell of coffee in the air.
 END
 
-LOCATION 14
+LOCATION 14 (Parliament)
 0
 You are outside the Robarts library.
 You are outside the Robarts library on a crowded street. There is a smell of coffee in the air.
 END
 
-LOCATION 15
-0
-You are outside the Robarts library.
-You are outside the Robarts library on a crowded street. There is a smell of coffee in the air.
-END
-
-LOCATION 16
+LOCATION 15 (Exam centre)
 0
 You are outside the Robarts library.
 You are outside the Robarts library on a crowded street. There is a smell of coffee in the air.
