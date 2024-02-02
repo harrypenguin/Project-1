@@ -24,3 +24,81 @@ LOCATION 3
 You are outside the Robarts library.
 You are outside the Robarts library on a crowded street. There is a smell of coffee in the air.
 END
+
+LOCATION 4
+0
+You are outside the Robarts library.
+You are outside the Robarts library on a crowded street. There is a smell of coffee in the air.
+END
+
+LOCATION 5
+0
+You are outside the Robarts library.
+You are outside the Robarts library on a crowded street. There is a smell of coffee in the air.
+END
+
+LOCATION 6
+0
+You are outside the Robarts library.
+You are outside the Robarts library on a crowded street. There is a smell of coffee in the air.
+END
+
+LOCATION 7
+0
+You are outside the Robarts library.
+You are outside the Robarts library on a crowded street. There is a smell of coffee in the air.
+END
+
+LOCATION 8
+0
+You are outside the Robarts library.
+You are outside the Robarts library on a crowded street. There is a smell of coffee in the air.
+END
+
+LOCATION 9
+0
+You are outside the Robarts library.
+You are outside the Robarts library on a crowded street. There is a smell of coffee in the air.
+END
+
+LOCATION 10
+0
+You are outside the Robarts library.
+You are outside the Robarts library on a crowded street. There is a smell of coffee in the air.
+END
+
+LOCATION 11
+0
+You are outside the Robarts library.
+You are outside the Robarts library on a crowded street. There is a smell of coffee in the air.
+END
+
+LOCATION 12
+0
+You are outside the Robarts library.
+You are outside the Robarts library on a crowded street. There is a smell of coffee in the air.
+END
+
+LOCATION 13
+0
+You are outside the Robarts library.
+You are outside the Robarts library on a crowded street. There is a smell of coffee in the air.
+END
+
+LOCATION 14
+0
+You are outside the Robarts library.
+You are outside the Robarts library on a crowded street. There is a smell of coffee in the air.
+END
+
+LOCATION 15
+0
+You are outside the Robarts library.
+You are outside the Robarts library on a crowded street. There is a smell of coffee in the air.
+END
+
+LOCATION 16
+0
+You are outside the Robarts library.
+You are outside the Robarts library on a crowded street. There is a smell of coffee in the air.
+END
