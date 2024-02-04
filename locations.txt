@@ -2,6 +2,9 @@ LOCATION -1
 0
 That way is blocked.
 That way is blocked.
+Look
+Walk East
+Walk West
 END
 
 LOCATION 1

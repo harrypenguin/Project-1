@@ -25,35 +25,38 @@ class Location:
     """A location in our text adventure game world.
 
     Instance Attributes:
-        - # TODO
+        - position: the position of the location in the world map
+        - brief_description: a brief description of the location
+        - long_description: a detailed description of the location
+        - actions: a list of actions available at this location
+        - items: a list of the items available at this location
+        - visited_before: whether this location has been visited before
 
     Representation Invariants:
-        - # TODO
+        - TODO: add representation invariants
     """
+    position: list[int, int]
+    score: int
+    brief_description: str
+    long_description: str
+    actions: list[str]
+    items: list[Item]
+    visited_before: bool
 
-    def __init__(self) -> None:
+    def __init__(self, position: list[int, int], score: int, brief_description: str, long_description: str,
+                 actions: list[str], items: list[Item], visited_before: bool) -> None:
         """Initialize a new location.
 
         # TODO Add more details here about the initialization if needed
         """
 
-        # NOTES:
-        # Data that could be associated with each Location object:
-        # a position in the world map,
-        # a brief description,
-        # a long description,
-        # a list of available commands/directions to move,
-        # items that are available in the location,
-        # and whether the location has been visited before.
-        # Store these as you see fit, using appropriate data types.
-        #
-        # This is just a suggested starter class for Location.
-        # You may change/add parameters and the data available for each Location object as you see fit.
-        #
-        # The only thing you must NOT change is the name of this class: Location.
-        # All locations in your game MUST be represented as an instance of this class.
-
-        # TODO: Complete this method
+        self.position = position
+        self.score = score
+        self.brief_description = brief_description
+        self.long_description = long_description
+        self.actions = actions
+        self.items = items
+        self.visited_before = visited_before
 
     def available_actions(self):
         """
@@ -66,7 +69,17 @@ class Location:
         # i.e. You may remove/modify/rename this as you like, and complete the
         # function header (e.g. add in parameters, complete the type contract) as needed
 
-        # TODO: Complete this method, if you'd like or remove/replace it if you're not using it
+        # TODO: Complete this method, if you'd like or remove/replace it if you're not using it -- I don't think we need this bc the World method already does this
+
+    def get_coordinates(self, map_data: TextIO) -> list[int, int]:
+        """
+        Return the x, y coordinates of the Location based on map.txt. map_data is an open text file.
+        """
+
+    def get_items(self, items_data: TextIO) -> list[Item]:
+        """
+        Return a list of Item objects currently at this location.
+        """
 
 
 class Item:
@@ -129,7 +142,8 @@ class World:
 
     Instance Attributes:
         - map: a nested list representation of this world's map
-        - # TODO add more instance attributes as needed; do NOT remove the map attribute
+        - locations: a dictionary mapping location numbers to Location objects
+        - items: a list of Item objects
 
     Representation Invariants:
         - # TODO
@@ -154,6 +168,7 @@ class World:
 
         # The map MUST be stored in a nested list as described in the load_map() function's docstring below
         self.map = self.load_map(map_data)
+        self.locations = self.load_locations(location_data)
 
         # NOTE: You may choose how to store location and item data; create your own World methods to handle these
         # accordingly. The only requirements:
@@ -173,9 +188,53 @@ class World:
         Return this list representation of the map.
         """
 
-        # TODO: Complete this method as specified. Do not modify any of this function's specifications.
+        map_loaded = []
+        for line in map_data:
+            line = line.strip('\n').split(' ')
+            map_loaded.append([int(number) for number in line])
+        return map_loaded
 
-    # TODO: Add methods for loading location data and item data (see note above).
+    def load_locations(self, location_data: TextIO) -> dict[int: Location]:
+        """
+        Store location data from open file location_data into a dicionary mapping of location numbers to location
+        objects, like so:
+
+        If location_data is a file containing the following text and the location is located at [0, 1] on the map:
+        LOCATION 3
+        0
+        Short description.
+        Long description.
+        Walk East
+        Examine
+        END
+        then load_locations should assign this World object's locations to be
+        {3: Location([0, 1], 0, 'Short description', 'Long description', ['Walk East', 'Examine'], [], False)}
+        TODO: Should we have scores for each location? List of possible actions?
+        """
+
+        location_loaded = []
+        lines = location_data.readlines()
+        for i in range(len(lines)):
+            if lines[i][0:8] == "LOCATION":
+                location_number = int(lines[i][9:len(lines[i])].strip("\n"))
+                score = int(lines[i + 1].strip("\n"))
+                short_description = lines[i + 2].strip("\n")
+                long_description = lines[i + 3].strip("\n")
+                actions = []
+                j = i + 4
+                while lines[j] != "END":
+                    actions += lines[j]
+                    j += 1
+
+                coordinates = [0, 0]
+                for x in self.map:
+                    for y in x:
+                        if y == location_number:
+                            coordinates = [self.map.index(x), x.index(y)]
+
+                location_loaded[location_number] = Location(coordinates, score, short_description, long_description,
+                                                            actions, [], False)
+        return location_loaded
 
     # NOTE: The method below is REQUIRED. Complete it exactly as specified.
     def get_location(self, x: int, y: int) -> Optional[Location]:
@@ -184,4 +243,5 @@ class World:
          return None.)
         """
 
-        # TODO: Complete this method as specified. Do not modify any of this function's specifications.
+        location_number = self.map[x][y]
+        return self.locations[location_number]
