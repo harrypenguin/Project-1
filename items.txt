@@ -1,6 +1,6 @@
-8 16 5 Cheat Sheet
-10 16 5 Pen
-14 15 5 Coin
-15 16 5 Tcard
+7 16 5 Cheat Sheet
+9 16 5 Pen
+11 15 5 Coin
+13 16 5 Tcard
 
-# score???
+
