@@ -46,7 +46,7 @@ END
 
 LOCATION 3
 5
-You are inside University College. It smells like Tom Fairgrieve in here. Type look for the full description of this location.
+You are inside University College. It smells like Tom Fairgrieve in here. You still hear the mumbling. Type look for the full description of this location.
 You are inside University College. It smells like Tom Fairgrieve in here, and you are really relieved to see (smell) your CSC110 professor again. Maybe, if you explain your situation to him, he'll help you out...
 
 Look
@@ -107,7 +107,7 @@ END
 LOCATION 7
 3
 You are in the basement level of Gerstein Library. Type look for the full description of this location.
-You are in the basement level of Gerstein Library. As the lights flicker ominously, you glimpse a piece of paper wedged between the bookshelves. Was that always there? It wasn't there last night when you came here. Wait, you were here last night? As you try to pull out the paper, your path is blocked by #uh what is the game instructions for the caesar cipher? add game commands
+You are in the basement level of Gerstein Library. As the lights flicker ominously, you glimpse a piece of paper wedged between the bookshelves. Was that always there? It wasn't there last night when you came here. Wait, you were here last night? As you try to pull out the paper, your path is blocked by a giant moving bookshelf. However, the rotating handle is locked. There's a pin pad with letters...What's the password?
 
 Look
 Inventory
@@ -181,8 +181,8 @@ END
 
 LOCATION 12
 0
-Oh my, you just walked straight into a construction zone and lost 3 moves. Type look for the full description of this location.
-Oh my, you just walked straight into a construction zone and lost 3 moves. Why aren't you wearing a hard hat? # deposit hard hat? Don't the engineers have hard hats?
+You are in a construction zone. Type look for the full description of this location.
+Oh my, you just walked straight into a pit surrounded by large and loud excavator...you didn't know there was construction here!
 
 Look
 Inventory
@@ -196,7 +196,7 @@ END
 
 LOCATION 13
 3
-You are at the Parliament help desk and you are eager to get the employee to help you! Type look for the full description of this location.
+You are at the Parliament. Ben sits at a desk, doing nothing. Type look for the full description of this location.
 The Parliament employee at the Parliament help desk looks eager to help. After reading his nametage (Ben) and thinking of a strategy, you realize that you aren't afraid to negotiate with him as long as you have the right resources ($) to do so. Maybe he can help you cancel all testing in Canada so you can find your missing Tcard. Or even better, he can just tell you where your Tcard is. Either way, you know how the wheels of bureaucracy turn...
 
 Look

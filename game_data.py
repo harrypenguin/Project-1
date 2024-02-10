@@ -25,10 +25,13 @@ class Item:
     """An item in our text adventure game world.
 
     Instance Attributes:
-        - # TODO
+        - name: name of the item
+        - start_position: the initial position of the item
+        - target_position: where the item should be deposited to earn points
+        - target_point: the number of points earned once the item reaches its target location
 
     Representation Invariants:
-        - # TODO
+        - name != ''
     """
     name: str
     start_position: int
@@ -312,28 +315,35 @@ class Player:
             if self.x + 1 < len(self.world.map[self.y]) and self.world.map[self.y][self.x + 1] != -1:
                 self.x += 1
                 new_location = self.world.get_location(self.x, self.y)
+            else:
+                print("That way is blocked.")
         elif direction.upper() == "WEST":
             if self.x - 1 >= 0 and self.world.map[self.y][self.x - 1] != -1:
                 self.x -= 1
                 new_location = self.world.get_location(self.x, self.y)
+            else:
+                print("That way is blocked.")
         elif direction.upper() == "NORTH":
             if self.y - 1 >= 0 and self.world.map[self.y - 1][self.x] != -1:
                 self.y -= 1
                 new_location = self.world.get_location(self.x, self.y)
+            else:
+                print("That way is blocked.")
         elif direction.upper() == "SOUTH":
             if self.y + 1 < len(self.world.map) and self.world.map[self.y + 1][self.x] != -1:
                 self.y += 1
                 new_location = self.world.get_location(self.x, self.y)
+            else:
+                print("That way is blocked.")
         else:
             print("That is not a valid direction!")
 
-        if new_location.location_number == 12:
-            self.moves -= 3
-        else:
-            self.moves -= 1
-        self.score += new_location.score
+        self.moves -= 1
+        if new_location.score != 0 and not new_location.visited_before:
+            self.score += new_location.score  # Gives player scores for visiting an important location!
+            print(f"You earned {new_location.score} points by visiting here.")
 
-        print(f"You have {self.moves} moves left!")
+        print(f"You have {self.moves} moves left.")
         # Might be redundant, adventure.py already seems to do this
         # message = ''
         # if new_location.visited_before:
@@ -384,6 +394,12 @@ class Player:
         """
         Deposits something the player is carrying onto the current location.
         """
+        if self.world.get_location(self.x, self.y).location_number == 13 and item_name.upper() == "COIN":
+            # Easter egg: If at government office and deposited coin, then automatically get tcard
+            print("Ben smirked mysteriously and opened his drawer...it's your tcard! He hands it to you discreetly "
+                  "and says: This never happened.")
+            self.pickup_item("tcard")
+
         for item in self.inventory:
             if item.name.upper() == item_name.upper():
                 self.world.get_location(self.x, self.y).items.append(item)

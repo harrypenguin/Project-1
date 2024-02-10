@@ -17,11 +17,31 @@ please consult our Course Syllabus.
 
 This file is Copyright (c) 2024 CSC111 Teaching Team
 """
+import random
 
 # Note: You may add in other import statements here as needed
 from game_data import World, Item, Location, Player
 
-# Note: You may add helper functions, classes, etc. here as needed
+
+def caesar_cipher(text: str) -> str:
+    """
+    Takes in a string and converts it into ciphertext with the caesar cipher encryption algorithm. The shift is random
+    each time. Used to generate the hint for Gerstein basement's password.
+    """
+    encrypted_text = ""
+    shift = random.randint(1, 25)
+    for char in text:
+        shift_amount = shift % 26
+        if char.isalpha():
+            if char.islower():
+                new_char = chr((ord(char) - 97 + shift_amount) % 26 + 97)
+            else:
+                new_char = chr((ord(char) - 65 + shift_amount) % 26 + 65)
+            encrypted_text += new_char
+        else:
+            encrypted_text += char
+    return encrypted_text
+
 
 # Note: You may modify the code below as needed; the following starter template are just suggestions
 if __name__ == "__main__":
@@ -30,6 +50,18 @@ if __name__ == "__main__":
 
     while not p.victory:
         location = w.get_location(p.x, p.y)
+
+        if p.moves <= 0:
+            print("You ran out of moves! The game is over.")
+            # End the game if the player runs out of moves.
+            exit()
+
+        items_here = [item.name for item in location.items]
+        if location.location_number == 14 and all([item in items_here for item in ['Cheat sheet', 'Pen', 'Tcard']]):
+            print("You successfully collected all the items for the exam. The doors open and you walk in...")
+            print(f"Game over. Your final score is {p.score}")
+            # The player wins when all required items are brought to exam centre.
+            p.victory = True
 
         if location.visited_before:
             print(location.brief_description)
@@ -41,6 +73,15 @@ if __name__ == "__main__":
             for item in location.items:
                 print(item.name)
 
+        if location.location_number == 3:
+            toms_message = ('Hello! I am Tom Fairgrieve, I taught CSC110. '
+                            'If you learned Caesar Cipher, you would know the password is Tom Fairgrieve!')
+
+            print(f"Professor Fairgrieve seems to be talking to himself. You can't exactly make out what he's saying. "
+                  f"It just sounds like mumbling! \nAs you get closer, you realize his speech is completely slurred: "
+                  f"\n'{caesar_cipher(toms_message)}...' What?? Is your hearing ok??")
+            # Generate and print cipher hint for Gerstein basement password
+
         if location.location_number == 8 and not location.visited_before:
             # Elevator puzzle
             # TODO: Play pitch here -- or maybe make random generation each time?
@@ -48,7 +89,7 @@ if __name__ == "__main__":
             for i in range(3):  # Gives the player 3 attempts
                 choice = input("\nEnter your answer as a number: ")
                 try:
-                    if int(choice) == 2:
+                    if int(choice) == 2:  # The correct answer is 2
                         print("Correct! You've got the right number.")
                         p.x = 6
                         p.y = 5
@@ -56,13 +97,13 @@ if __name__ == "__main__":
                     else:
                         print("Incorrect, please try again.")
                 except ValueError:
+                    # If the player enters a non-integer, to prevent int() from throwing ValueError
                     print("Incorrect, please enter a valid number.")
 
                 if i == 2:  # Checks if it's the last attempt
                     print("Sorry, you've used all your attempts. The game will end now.")
                     # TODO: End?? Maybe don't end if u have engineer hat or smt
                     exit()
-
         elif location.location_number == 7 and not location.visited_before:
             # Bookshelf puzzle
             choice = input("\nPlease enter the passcode to open the bookshelf:")
@@ -71,6 +112,12 @@ if __name__ == "__main__":
                 choice = input("\nPlease enter the passcode to open the bookshelf:")
             print("The bookshelf has been opened!")
             location.visited_before = True
+        elif location.location_number == 12 and not location.visited_before:
+            if any([item.name == "Construction hat" for item in p.inventory]):
+                print("Good thing you have a hard hat...The fall did no damage. Don't fall in again!")
+            else:
+                p.moves -= 3
+                print("Ouch! You just lost 3 moves...don't the engineers have construction hats to protect themselves?")
         else:
             print("What to do? \n")
             print("[menu]")
@@ -88,6 +135,11 @@ if __name__ == "__main__":
                 p.move(choice[3:])
 
             if "PICKUP " in choice.upper():
+                if location.location_number == 13:
+                    print("Ben vehemently denies that he is in possession of your tcard...although it's right there!")
+                    # Prevents the player from directly picking up the tcard at parliament. The deposit command
+                    # will allow automatic pickup if Ben is bribed.
+                    continue
                 p.pickup_item(choice[7:])
 
             if "DEPOSIT " in choice.upper():
