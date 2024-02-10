@@ -21,67 +21,6 @@ This file is Copyright (c) 2024 CSC111 Teaching Team
 from typing import Optional, TextIO
 
 
-class Location:
-    """A location in our text adventure game world.
-
-    Instance Attributes:
-        - position: the position of the location in the world map
-        - brief_description: a brief description of the location
-        - long_description: a detailed description of the location
-        - actions: a list of actions available at this location
-        - items: a list of the items available at this location
-        - visited_before: whether this location has been visited before
-
-    Representation Invariants:
-        - TODO: add representation invariants
-    """
-    position: list[int, int]
-    score: int
-    brief_description: str
-    long_description: str
-    actions: list[str]
-    items: list[Item]
-    visited_before: bool
-
-    def __init__(self, position: list[int, int], score: int, brief_description: str, long_description: str,
-                 actions: list[str], items: list[Item], visited_before: bool) -> None:
-        """Initialize a new location.
-
-        # TODO Add more details here about the initialization if needed
-        """
-
-        self.position = position
-        self.score = score
-        self.brief_description = brief_description
-        self.long_description = long_description
-        self.actions = actions
-        self.items = items
-        self.visited_before = visited_before
-
-    def available_actions(self):
-        """
-        Return the available actions in this location.
-        The actions should depend on the items available in the location
-        and the x,y position of this location on the world map.
-        """
-
-        # NOTE: This is just a suggested method
-        # i.e. You may remove/modify/rename this as you like, and complete the
-        # function header (e.g. add in parameters, complete the type contract) as needed
-
-        # TODO: Complete this method, if you'd like or remove/replace it if you're not using it -- I don't think we need this bc the World method already does this
-
-    def get_coordinates(self, map_data: TextIO) -> list[int, int]:
-        """
-        Return the x, y coordinates of the Location based on map.txt. map_data is an open text file.
-        """
-
-    def get_items(self, items_data: TextIO) -> list[Item]:
-        """
-        Return a list of Item objects currently at this location.
-        """
-
-
 class Item:
     """An item in our text adventure game world.
 
@@ -91,6 +30,10 @@ class Item:
     Representation Invariants:
         - # TODO
     """
+    name: str
+    start_position: int
+    target_position: int
+    target_points: int
 
     def __init__(self, name: str, start: int, target: int, target_points: int) -> None:
         """Initialize a new item.
@@ -111,30 +54,71 @@ class Item:
         self.target_points = target_points
 
 
-class Player:
-    """
-    A Player in the text advanture game.
+class Location:
+    """A location in our text adventure game world.
 
     Instance Attributes:
-        - # TODO
+        - position: the position of the location in the world map
+        - brief_description: a brief description of the location
+        - long_description: a detailed description of the location
+        - actions: a list of actions available at this location
+        - items: a list of the items available at this location
+        - visited_before: whether this location has been visited before
+        - location_number: the number assigned to this location on the map
 
     Representation Invariants:
-        - # TODO
+        - TODO: add representation invariants
     """
+    position: list[int, int]
+    score: int
+    brief_description: str
+    long_description: str
+    actions: list[str]
+    items: list[Item]
+    visited_before: bool
+    location_number: int
 
-    def __init__(self, x: int, y: int) -> None:
+    def __init__(self, position: list[int, int], score: int, brief_description: str, long_description: str,
+                 actions: list[str], items: list[Item], visited_before: bool, location_number: int) -> None:
+        """Initialize a new location.
+
+        # TODO Add more details here about the initialization if needed
         """
-        Initializes a new Player at position (x, y).
+
+        self.position = position
+        self.score = score
+        self.brief_description = brief_description
+        self.long_description = long_description
+        self.actions = actions
+        self.items = items
+        self.visited_before = visited_before
+        self.location_number = location_number
+
+    def available_actions(self):
         """
+        Return the available actions in this location.
+        The actions should depend on the items available in the location
+        and the x,y position of this location on the world map.
+        """
+        return self.actions
 
-        # NOTES:
-        # This is a suggested starter class for Player.
-        # You may change these parameters and the data available for the Player object as you see fit.
+    def get_coordinates(self) -> list[int, int]:
+        """
+        Return the x, y coordinates of the Location based on map.txt. map_data is an open text file.
+        """
+        return self.position
 
-        self.x = x
-        self.y = y
-        self.inventory = []
-        self.victory = False
+    def get_items(self) -> list[Item]:
+        """
+        Return a list of Item objects currently at this location.
+        """
+        return self.items
+
+    def get_number(self) -> int:
+        """
+        Return the location number associated with this location.
+        """
+        return self.location_number
 
 
 class World:
@@ -142,12 +126,15 @@ class World:
 
     Instance Attributes:
         - map: a nested list representation of this world's map
-        - locations: a dictionary mapping location numbers to Location objects
-        - items: a list of Item objects
+        - locations: a dictionary mapping location numbers to Location objects. Corresponding Item objects will be
+        associated with these Locations.
 
     Representation Invariants:
-        - # TODO
+        - uhh
     """
+    map_data: TextIO
+    location_data: TextIO
+    items_data: TextIO
 
     def __init__(self, map_data: TextIO, location_data: TextIO, items_data: TextIO) -> None:
         """
@@ -156,7 +143,6 @@ class World:
         - location_data: name of text file containing location data (format left up to you)
         - items_data: name of text file containing item data (format left up to you)
         """
-
         # NOTES:
 
         # map_data should refer to an open text file containing map data in a grid format, with integers separated by a
@@ -169,6 +155,7 @@ class World:
         # The map MUST be stored in a nested list as described in the load_map() function's docstring below
         self.map = self.load_map(map_data)
         self.locations = self.load_locations(location_data)
+        self.load_items(items_data)
 
         # NOTE: You may choose how to store location and item data; create your own World methods to handle these
         # accordingly. The only requirements:
@@ -190,7 +177,7 @@ class World:
 
         map_loaded = []
         for line in map_data:
-            line = line.strip('\n').split(' ')
+            line = line.strip('\n').split()
             map_loaded.append([int(number) for number in line])
         return map_loaded
 
@@ -209,32 +196,57 @@ class World:
         END
         then load_locations should assign this World object's locations to be
         {3: Location([0, 1], 0, 'Short description', 'Long description', ['Walk East', 'Examine'], [], False)}
-        TODO: Should we have scores for each location? List of possible actions?
+
+        Return this dictionary representation of locations.
         """
 
-        location_loaded = []
+        location_loaded = {}
         lines = location_data.readlines()
-        for i in range(len(lines)):
-            if lines[i][0:8] == "LOCATION":
-                location_number = int(lines[i][9:len(lines[i])].strip("\n"))
-                score = int(lines[i + 1].strip("\n"))
-                short_description = lines[i + 2].strip("\n")
-                long_description = lines[i + 3].strip("\n")
+        i = 0
+        while i < len(lines):
+            if lines[i].startswith("LOCATION"):
+                location_number = int(lines[i][9:].strip())
+                score = int(lines[i + 1].strip())
+                short_description = lines[i + 2].strip()
+                long_description = lines[i + 3].strip()
                 actions = []
                 j = i + 4
-                while lines[j] != "END":
-                    actions += lines[j]
+                while lines[j].strip() != "END":
+                    action_line = lines[j].strip()
+                    if action_line:
+                        actions.append(action_line)
                     j += 1
+                i = j + 1  # Skip the line containing "END"
 
                 coordinates = [0, 0]
-                for x in self.map:
-                    for y in x:
-                        if y == location_number:
-                            coordinates = [self.map.index(x), x.index(y)]
+                for y in self.map:
+                    for x in y:
+                        if x == location_number:
+                            coordinates = [y.index(x), self.map.index(y)]
+                            break
 
                 location_loaded[location_number] = Location(coordinates, score, short_description, long_description,
-                                                            actions, [], False)
+                                                            actions, [], False, location_number)
+            else:
+                i += 1  # Increment i if the line does not start with "LOCATION"
+
         return location_loaded
+
+    def load_items(self, items_data: TextIO) -> None:
+        """
+        Load items and associate them with the corresponding starting locations.
+        For example, if items.txt contains the following:
+        1 10 5 Cheat Sheet
+        1 13 5 Pen
+        Then self.locations[1].items should be a list of Item objects corresponding to Cheat Sheet and Pen.
+
+        Does not return anything.
+        """
+        data = items_data.readlines()
+        for line in data:
+            line = line.strip().split()
+            new_item = Item(" ". join(line[3:]), int(line[0]), int(line[1]), int(line[2]))
+            self.locations[new_item.start_position].items.append(new_item)
 
     # NOTE: The method below is REQUIRED. Complete it exactly as specified.
     def get_location(self, x: int, y: int) -> Optional[Location]:
@@ -243,5 +255,143 @@ class World:
          return None.)
         """
 
-        location_number = self.map[x][y]
+        location_number = self.map[y][x]
         return self.locations[location_number]
+
+
+class Player:
+    """
+    A Player in the text advanture game.
+
+    Instance Attributes:
+        - x: x coordinate of player. Top left corner of the map is 0. Increases going right.
+        - y: y coordinate of player. Top left corner is 0. Increases going down.
+        - inventory: list of Item objects currently possessed by the player.
+        - victory: True if the player has won. False otherwise.
+        - score: The current score of the player. Increases as more items are picked up and locations reached.
+        - moves: Number of available moves left for the player.
+        - world: The world in which the player exists.
+
+    Representation Invariants:
+        - x < len(self.world.map[y])
+        - y < len(self.world.map)
+    """
+    x: int
+    y: int
+    inventory: list[Item]
+    victory: bool
+    score: int
+    moves: int
+    world: Optional[World]
+
+    def __init__(self, x: int, y: int, world: World) -> None:
+        """
+        Initializes a new Player at position (x, y).
+        """
+
+        # NOTES:
+        # This is a suggested starter class for Player.
+        # You may change these parameters and the data available for the Player object as you see fit.
+
+        self.x = x
+        self.y = y
+        self.inventory = []
+        self.victory = False
+        self.score = 0
+        self.moves = 20
+        self.world = world
+
+    def move(self, direction: str):
+        """
+        The method corresponding to movement commands. Takes in a direction "EAST", "WEST", "NORTH", "SOUTH".
+        Changes the player's coordinates.
+        """
+
+        new_location = self.world.locations[-1]
+        if direction.upper() == "EAST":
+            if self.x + 1 < len(self.world.map[self.y]) and self.world.map[self.y][self.x + 1] != -1:
+                self.x += 1
+                new_location = self.world.get_location(self.x, self.y)
+        elif direction.upper() == "WEST":
+            if self.x - 1 >= 0 and self.world.map[self.y][self.x - 1] != -1:
+                self.x -= 1
+                new_location = self.world.get_location(self.x, self.y)
+        elif direction.upper() == "NORTH":
+            if self.y - 1 >= 0 and self.world.map[self.y - 1][self.x] != -1:
+                self.y -= 1
+                new_location = self.world.get_location(self.x, self.y)
+        elif direction.upper() == "SOUTH":
+            if self.y + 1 < len(self.world.map) and self.world.map[self.y + 1][self.x] != -1:
+                self.y += 1
+                new_location = self.world.get_location(self.x, self.y)
+        else:
+            print("That is not a valid direction!")
+
+        if new_location.location_number == 12:
+            self.moves -= 3
+        else:
+            self.moves -= 1
+        self.score += new_location.score
+
+        print(f"You have {self.moves} moves left!")
+        # Might be redundant, adventure.py already seems to do this
+        # message = ''
+        # if new_location.visited_before:
+        #     message = f"{new_location.brief_description} \nThe commands available to you are: {', '.join(new_location.actions)}"
+        # else:
+        #     new_location.visited_before = True
+        #     message = f"{new_location.long_description} \nThe commands available to you are: {', '.join(new_location.actions)}"
+        # if new_location.items:
+        #     item_names = ', '.join([item.name for item in new_location.items])
+        #     message += f" \nItems available here: {item_names}"
+        #
+        # return message
+
+    def get_score(self):
+        """
+        Print the current score of the player.
+        """
+        print("Your current score is: " + str(self.score))
+
+    def get_moves(self):
+        """
+        Print the number of moves left.
+        """
+        print("You have " + str(self.moves) + " moves left.")
+
+    def check_inventory(self):
+        """
+        Print information about items currently in the player's inventory.
+        """
+        if not self.inventory:
+            print("Womp womp...There's nothing in your inventory!")
+        else:
+            print("In your inventory, you currently have: " + ', '.join([item.name for item in self.inventory]))
+
+    def pickup_item(self, item_name: str):
+        """
+        Allows the player to pick up a specified item at the location.
+        """
+        for item in self.world.get_location(self.x, self.y).items:
+            if item.name.upper() == item_name.upper():
+                self.world.get_location(self.x, self.y).items.remove(item)
+                self.inventory.append(item)
+                print(f"You just picked up {item.name}! It's in your bag now, check inventory to confirm.")
+                return None
+        print(f"There's no {item_name} here...")
+
+    def deposit(self, item_name: str):
+        """
+        Deposits something the player is carrying onto the current location.
+        """
+        for item in self.inventory:
+            if item.name.upper() == item_name.upper():
+                self.world.get_location(self.x, self.y).items.append(item)
+                self.inventory.remove(item)
+                if self.world.get_location(self.x, self.y).location_number == item.target_position:
+                    self.score += item.target_points
+                    print(f"You just deposited {item.name}. You earned {item.target_points} points.")
+                    return None
+                print(f"You just deposited {item.name}.")
+                return None
+        print(f"There's no {item_name} in your inventory...")

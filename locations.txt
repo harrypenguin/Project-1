@@ -1,29 +1,250 @@
 LOCATION -1
 0
+That way is blocked. Type look for the full description of this location.
 That way is blocked.
-That way is blocked.
+
 Look
-Walk East
-Walk West
+Inventory
+Go [north/south/east/west]
+Pickup
+Deposit [item name]
+Score
+Talk
+Quit
+
 END
 
 LOCATION 1
 0
-You are on the first floor of the Robarts Library. There is an empty study room to the South, an exit from the library to the East.
-You are on the first floor of the Robarts Library. It's usually crowded at this time of the day, but today it's eerily quiet.
-Only a few students are studying inside one of the study rooms. You better not disturb them. A librarian stands near the
-service desk, looking bored and sleepy. There is an empty study room to the South, an exit from the library to the East.
+You are at Front Campus. Type look for the full description of this location.
+Good morning beautiful! You are at Front Campus. The grass is green here. There are buildings all around you: UC, Myhal, Convocation Hall and Gerstein.
+
+Look
+Inventory
+Go [north/south/east/west]
+Pickup
+Deposit [item name]
+Score
+Talk
+Quit
 END
 
 LOCATION 2
-0
-This study room is completely empty.
-You are in an empty study room. And by empty, we mean, absolutely empty. All the tables and chairs have been taken out,
-the whiteboards taken off the wall, not even the carpeting is left. Are they planning to do something else with this space?
+3
+You are at the Garden between University College and Front Campus. Type look for the full description of this location.
+You are at the Garden between University College and the Front Campus. The grass is greener here, and there are even vegetables! This leads you to wonder if you are vitamin C deficient. You see a figure standing in the UC building. A doctor?
+
+Look
+Inventory
+Go [north/south/east/west]
+Pickup
+Deposit [item name]
+Score
+Talk
+Quit
 END
 
 LOCATION 3
-0
-You are outside the Robarts library.
-You are outside the Robarts library on a crowded street. There is a smell of coffee in the air.
+5
+You are inside University College. It smells like Tom Fairgrieve in here. Type look for the full description of this location.
+You are inside University College. It smells like Tom Fairgrieve in here, and you are really relieved to see (smell) your CSC110 professor again. Maybe, if you explain your situation to him, he'll help you out...
+
+Look
+Inventory
+Go [north/south/east/west]
+Pickup
+Deposit [item name]
+Score
+Talk
+Quit
 END
+
+LOCATION 4
+7
+You are inside Myhal. The engineers in here look a bit scary. Type look for the full description of this location.
+You are inside Myhal. All around you are engineers walking to class, and they are judging you, because you are obviously not an engineer. They can sniff you out, you know...
+
+Look
+Inventory
+Go [north/south/east/west]
+Pickup
+Deposit [item name]
+Score
+Talk
+Quit
+END
+
+LOCATION 5
+3
+You are inside Convocation Hall. Type look for the full description of this location.
+You are inside Convocation Hall. There's no one in this building. None of your classmates are here. Maybe you actually fell asleep for 4 years, and they've all graduated without you. One can dream!
+
+Look
+Inventory
+Go [north/south/east/west]
+Pickup
+Deposit [item name]
+Score
+Talk
+Quit
+END
+
+LOCATION 6
+5
+You are inside Gerstein Library. Type look for the full description of this location.
+You are inside Gerstein Library. After pleading with the guard, he lets you in despite the fact that you're missing your Tcard. He can't help but give you a piece of unsolicited advice: "You should check the basement." Wow, who asked him?
+
+Look
+Inventory
+Go [north/south/east/west]
+Pickup
+Deposit [item name]
+Score
+Talk
+Quit
+END
+
+LOCATION 7
+3
+You are in the basement level of Gerstein Library. Type look for the full description of this location.
+You are in the basement level of Gerstein Library. As the lights flicker ominously, you glimpse a piece of paper wedged between the bookshelves. Was that always there? It wasn't there last night when you came here. Wait, you were here last night? As you try to pull out the paper, your path is blocked by #uh what is the game instructions for the caesar cipher? add game commands
+
+Look
+Inventory
+Go [north/south/east/west]
+Pickup
+Deposit [item name]
+Score
+Talk
+Quit
+END
+
+LOCATION 8
+3
+You get in the elevator, the only path out of the basement. It's a quiet and smooth trip this time. Type look for the full description of this location.
+You get in the elevator. It is the only path out of the basement. The buttons in the elevator number 1-8, but you don't have enough time to check all the floors for your pen. To make matters worse, irritating elevator music starts playing through the speakers. As you try to concentrate on making a decision, you realize there's a lot more to this strange song. These are actually instructions. The song playing overhead is actually just one note in different rhythms and tempo, and the whole range of musical notes can be named by single letters A through F, which would correspond to floors 1-8 respectively. Using your perfect pitch, type in the correct number (1-8 inclusive) corresponding to the note playing overhead. # add game commands this one is special because second time u cant get the elevator puzzle again
+
+Look
+Inventory
+Go [north/south/east/west]
+Pickup
+Deposit [item name]
+Score
+Talk
+Quit
+END
+
+LOCATION 9
+3
+This is the 2nd floor of Gerstein. Type look for the full description of this location.
+Great job! You made it to the 2nd floor (and the correct floor) of Gerstein. There is a table in front of you with a familiar object. Also, there is an exit sign up ahead.
+
+Look
+Inventory
+Go [north/south/east/west]
+Pickup
+Deposit [item name]
+Score
+Talk
+Quit
+END
+
+LOCATION 10
+0
+These are the stairs leading out of Gerstein. Type look for the full description of this location.
+These are the stairs leading from 2nd floor Gerstein to the outside road. There is a light at the end of the tunnel.
+
+Look
+Inventory
+Go [north/south/east/west]
+Pickup
+Deposit [item name]
+Score
+Talk
+Quit
+END
+
+LOCATION 11
+0
+You are on the road. Type look for the full description of this location.
+You are on the road. You know, they say all roads lead to Rome.
+
+Look
+Inventory
+Go [north/south/east/west]
+Pickup
+Deposit [item name]
+Score
+Talk
+Quit
+END
+
+LOCATION 12
+0
+Oh my, you just walked straight into a construction zone and lost 3 moves. Type look for the full description of this location.
+Oh my, you just walked straight into a construction zone and lost 3 moves. Why aren't you wearing a hard hat? # deposit hard hat? Don't the engineers have hard hats?
+
+Look
+Inventory
+Go [north/south/east/west]
+Pickup
+Deposit [item name]
+Score
+Talk
+Quit
+END
+
+LOCATION 13
+3
+You are at the Parliament help desk and you are eager to get the employee to help you! Type look for the full description of this location.
+The Parliament employee at the Parliament help desk looks eager to help. After reading his nametage (Ben) and thinking of a strategy, you realize that you aren't afraid to negotiate with him as long as you have the right resources ($) to do so. Maybe he can help you cancel all testing in Canada so you can find your missing Tcard. Or even better, he can just tell you where your Tcard is. Either way, you know how the wheels of bureaucracy turn...
+
+Look
+Inventory
+Go [north/south/east/west]
+Pickup
+Deposit [item name]
+Score
+Talk
+Quit
+END
+
+LOCATION 14
+7
+You are inside the exam centre. Type look for the full description of this location.
+You are inside the exam centre. If you have all your items, you can turn them in and head to your seat.
+
+Look
+Inventory
+Go [north/south/east/west]
+Pickup
+Deposit [item name]
+Score
+Talk
+Quit
+END
+
+
+look: The "look" command prints out the full description of the current location.
+inventory:This command gives a list of what the player is currently carrying.
+"Go [direction]" where [direction] is "north", "south", "east", "west"
+Required Command: "Score"
+This command gives the player's current score. The scoring algorithm should include giving points for picking up and depositing the required exam items, as well as performing other applicable actions in the game as you see fit.
+Quit
+Quit command allows player to quit game at any time.
+pick up item
+deposit all/item name
+talk
+would be nice to have a current moves command
+
+Command options:
+*note that not all commands may work in every location*
+look: prints out full description of current location
+inventory: list of what you are currently carrying
+go [north/south/east/west]: movement command
+pickup: picks up item in the room
+deposit: drop all items
+deposit [item name]: drop specific item
+score: returns your current score
+talk: talk to the character in the room
+quit: quit the game, all progress is lost
