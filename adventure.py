@@ -18,15 +18,30 @@ please consult our Course Syllabus.
 This file is Copyright (c) 2024 CSC111 Teaching Team
 """
 import random
+import pygame
 
 # Note: You may add in other import statements here as needed
-from game_data import World, Item, Location, Player
+from game_data import World, Item, Location, Player, Puzzle, InfiniteTriesPuzzle, LimitedTriesPuzzle
+
+
+def play_sound(file_path):
+    """
+    Puzzle helper function to play a certain pitch.
+    """
+    # Initialize the pygame mixer
+    pygame.mixer.init()
+    # Load the sound file
+    sound = pygame.mixer.Sound(file_path)
+    # Play the sound
+    sound.play()
 
 
 def caesar_cipher(text: str) -> str:
     """
+    Puzzle helper function.
     Takes in a string and converts it into ciphertext with the caesar cipher encryption algorithm. The shift is random
     each time. Used to generate the hint for Gerstein basement's password.
+
     """
     encrypted_text = ""
     shift = random.randint(1, 25)
@@ -69,56 +84,50 @@ if __name__ == "__main__":
             print(location.long_description)
 
         if location.items:
+            # If there are items here, display them.
             print("Items available here: ")
             for item in location.items:
                 print(item.name)
 
         if location.location_number == 3:
+            # Special interaction with Tom
             toms_message = ('Hello! I am Tom Fairgrieve, I taught CSC110. '
                             'If you learned Caesar Cipher, you would know the password is Tom Fairgrieve!')
 
+            # Generate and print cipher hint for Gerstein basement password
             print(f"Professor Fairgrieve seems to be talking to himself. You can't exactly make out what he's saying. "
                   f"It just sounds like mumbling! \nAs you get closer, you realize his speech is completely slurred: "
                   f"\n'{caesar_cipher(toms_message)}...' What?? Is your hearing ok??")
-            # Generate and print cipher hint for Gerstein basement password
 
         if location.location_number == 8 and not location.visited_before:
             # Elevator puzzle
-            # TODO: Play pitch here -- or maybe make random generation each time?
+            play_sound("pitch.mp3")
 
-            for i in range(3):  # Gives the player 3 attempts
-                choice = input("\nEnter your answer as a number: ")
-                try:
-                    if int(choice) == 2:  # The correct answer is 2
-                        print("Correct! You've got the right number.")
-                        p.x = 6
-                        p.y = 5
-                        break
-                    else:
-                        print("Incorrect, please try again.")
-                except ValueError:
-                    # If the player enters a non-integer, to prevent int() from throwing ValueError
-                    print("Incorrect, please enter a valid number.")
+            elevator_puzzle = LimitedTriesPuzzle(2, 3)
+            if elevator_puzzle.attempt_solution():
+                p.x = 6
+                p.y = 5
+            else:
+                exit()
 
-                if i == 2:  # Checks if it's the last attempt
-                    print("Sorry, you've used all your attempts. The game will end now.")
-                    # TODO: End?? Maybe don't end if u have engineer hat or smt
-                    exit()
         elif location.location_number == 7 and not location.visited_before:
             # Bookshelf puzzle
-            choice = input("\nPlease enter the passcode to open the bookshelf:")
-            while choice.upper() != "TOM FAIRGRIEVE":
-                print("Incorrect! Please try again.")
-                choice = input("\nPlease enter the passcode to open the bookshelf:")
-            print("The bookshelf has been opened!")
-            location.visited_before = True
+            cipher_puzzle = InfiniteTriesPuzzle('Tom Fairgrieve')
+            if cipher_puzzle.attempt_solution():
+                print("The bookshelf has been opened!")
+                location.visited_before = True
+
         elif location.location_number == 12 and not location.visited_before:
+            # Construction trap!
             if any([item.name == "Construction hat" for item in p.inventory]):
+                # If the construction hat item is in the inventory, the player does not lose moves.
                 print("Good thing you have a hard hat...The fall did no damage. Don't fall in again!")
             else:
                 p.moves -= 3
                 print("Ouch! You just lost 3 moves...don't the engineers have construction hats to protect themselves?")
+
         else:
+            # Normal prompts for when there are no special features
             print("What to do? \n")
             print("[menu]")
             for action in location.available_actions():
@@ -160,18 +169,22 @@ if __name__ == "__main__":
                     exit()
                 else:
                     continue
+                    # Skip to the next game cycle
 
         if not location.visited_before:
+            # Makes sure the location is marked as visited before, if not already.
             location.visited_before = True
 
 
-        # TODO: CALL A FUNCTION HERE TO HANDLE WHAT HAPPENS UPON THE PLAYER'S CHOICE
-        #  REMEMBER: the location = w.get_location(p.x, p.y) at the top of this loop will update the location if
-        #  the choice the player made was just a movement, so only updating player's position is enough to change the
-        #  location to the next appropriate location
-        #  Possibilities:
-        #  A helper function such as do_action(w, p, location, choice)
-        #  OR A method in World class w.do_action(p, location, choice)
-        #  OR Check what type of action it is, then modify only player or location accordingly
-        #  OR Method in Player class for move or updating inventory
-        #  OR Method in Location class for updating location item info, or other location data etc....
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod(verbose=True)
+
+    # When you are ready to check your work with python_ta, uncomment the following lines.
+    # (In PyCharm, select the lines below and press Ctrl/Cmd + / to toggle comments.)
+    # You can use "Run file in Python Console" to run PythonTA,
+    # and then also test your methods manually in the console.
+    import python_ta
+    python_ta.check_all(config={
+        'max-line-length': 120
+    })

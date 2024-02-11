@@ -18,7 +18,7 @@ please consult our Course Syllabus.
 
 This file is Copyright (c) 2024 CSC111 Teaching Team
 """
-from typing import Optional, TextIO
+from typing import Any, Optional, TextIO
 
 
 class Item:
@@ -70,7 +70,8 @@ class Location:
         - location_number: the number assigned to this location on the map
 
     Representation Invariants:
-        - TODO: add representation invariants
+        - brief_description != ''
+        - long_description != ''
     """
     position: list[int, int]
     score: int
@@ -133,7 +134,11 @@ class World:
         associated with these Locations.
 
     Representation Invariants:
-        - uhh
+        - len(map) > 1
+        - all([len(line) > 1 for line in map])
+        - all(any(location.location_number in sublist for sublist in self.map) for location in self.locations)
+        - all(0 <= location.position[0] < len(self.map[0]) and 0 <= location.position[1] < len(self.map) for
+                location in self.locations)
     """
     map_data: TextIO
     location_data: TextIO
@@ -208,10 +213,13 @@ class World:
         i = 0
         while i < len(lines):
             if lines[i].startswith("LOCATION"):
+                # Assigning each instance attribute to a value in the stripped line
                 location_number = int(lines[i][9:].strip())
                 score = int(lines[i + 1].strip())
                 short_description = lines[i + 2].strip()
                 long_description = lines[i + 3].strip()
+
+                # Loading the next few lines into a list of actions
                 actions = []
                 j = i + 4
                 while lines[j].strip() != "END":
@@ -228,6 +236,8 @@ class World:
                             coordinates = [y.index(x), self.map.index(y)]
                             break
 
+                # Assigning the instance attributes to a newly created Location object stored in the location_loaded
+                # dictionary.
                 location_loaded[location_number] = Location(coordinates, score, short_description, long_description,
                                                             actions, [], False, location_number)
             else:
@@ -248,8 +258,11 @@ class World:
         data = items_data.readlines()
         for line in data:
             line = line.strip().split()
+            # Splitting lines in items.txt
             new_item = Item(" ". join(line[3:]), int(line[0]), int(line[1]), int(line[2]))
+            # Adding different parts of the line as attributes to a new Item object
             self.locations[new_item.start_position].items.append(new_item)
+            # Assigning the new Item object to its corresponding Location object in the location dictionary
 
     # NOTE: The method below is REQUIRED. Complete it exactly as specified.
     def get_location(self, x: int, y: int) -> Optional[Location]:
@@ -278,6 +291,7 @@ class Player:
     Representation Invariants:
         - x < len(self.world.map[y])
         - y < len(self.world.map)
+        - score >= 0
     """
     x: int
     y: int
@@ -291,10 +305,6 @@ class Player:
         """
         Initializes a new Player at position (x, y).
         """
-
-        # NOTES:
-        # This is a suggested starter class for Player.
-        # You may change these parameters and the data available for the Player object as you see fit.
 
         self.x = x
         self.y = y
@@ -344,18 +354,6 @@ class Player:
             print(f"You earned {new_location.score} points by visiting here.")
 
         print(f"You have {self.moves} moves left.")
-        # Might be redundant, adventure.py already seems to do this
-        # message = ''
-        # if new_location.visited_before:
-        #     message = f"{new_location.brief_description} \nThe commands available to you are: {', '.join(new_location.actions)}"
-        # else:
-        #     new_location.visited_before = True
-        #     message = f"{new_location.long_description} \nThe commands available to you are: {', '.join(new_location.actions)}"
-        # if new_location.items:
-        #     item_names = ', '.join([item.name for item in new_location.items])
-        #     message += f" \nItems available here: {item_names}"
-        #
-        # return message
 
     def get_score(self):
         """
@@ -385,7 +383,9 @@ class Player:
         for item in self.world.get_location(self.x, self.y).items:
             if item.name.upper() == item_name.upper():
                 self.world.get_location(self.x, self.y).items.remove(item)
+                # Remove Item object from the location
                 self.inventory.append(item)
+                # Add Item object to the player's inventory
                 print(f"You just picked up {item.name}! It's in your bag now, check inventory to confirm.")
                 return None
         print(f"There's no {item_name} here...")
@@ -411,3 +411,100 @@ class Player:
                 print(f"You just deposited {item.name}.")
                 return None
         print(f"There's no {item_name} in your inventory...")
+
+
+class Puzzle:
+    """
+    An abstract puzzle superclass for creating different types of puzzles.
+
+    Instance Attributes:
+    - answer: the answer to the puzzle
+    """
+    answer: Any
+
+    def __init__(self, answer):
+        """
+        Initializes a new puzzle instance. A shared method.
+        """
+        self.answer = answer
+
+    def attempt_solution(self):
+        """
+        Attempts to solve the puzzle. This method should be implemented by subclasses.
+        """
+        raise NotImplementedError()
+
+
+class InfiniteTriesPuzzle(Puzzle):
+    """
+    A Puzzle subclass where the player has infinite attempts to solve the puzzle.
+    """
+
+    def attempt_solution(self):
+        """
+        Allows the player to attempt to solve the puzzle with infinite tries. Returns True when the user solves it.
+        """
+        user_answer = input("\nPlease enter the password: ").upper()
+        while user_answer != self.answer.upper():
+            print("Incorrect! Please try again.")
+            user_answer = input("\nPlease enter the password: ").upper()
+        print("Correct! You've solved the puzzle.")
+        return True
+
+
+class LimitedTriesPuzzle(Puzzle):
+    """
+    A Puzzle subclass where the player has a limited number of attempts to solve the puzzle.
+
+    Extra instance attribute
+    - tries: the maximum number of attempts.
+
+    Representation Invariants:
+    - tries > 0
+    """
+    tries: int
+
+    def __init__(self, answer, tries):
+        """
+        Initializes a new instance of a limited tries puzzle.
+        """
+        super().__init__(answer)
+        self.tries = tries
+
+    def attempt_solution(self):
+        """
+        Allows the player to attempt to solve the puzzle with a limited number of tries.
+        Returns False if the player fails the puzzle.
+        """
+        attempts = 0
+        while attempts < self.tries:
+            choice = input("\nEnter your answer as a number: ")
+            try:
+                if int(choice) == self.answer:  # The correct answer is 2
+                    print("Correct! You've got the right number.")
+                    return True
+                else:
+                    print("Incorrect, please try again.")
+                    attempts += 1
+            except ValueError:
+                # If the player enters a non-integer, to prevent int() from throwing ValueError
+                print("Incorrect, please enter a valid number.")
+                attempts += 1
+
+            if attempts == self.tries:  # Checks if it's the last attempt
+                print("Sorry, you've used all your attempts. The game will end now.")
+                return False
+
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod(verbose=True)
+
+    # When you are ready to check your work with python_ta, uncomment the following lines.
+    # (In PyCharm, select the lines below and press Ctrl/Cmd + / to toggle comments.)
+    # You can use "Run file in Python Console" to run PythonTA,
+    # and then also test your methods manually in the console.
+    import python_ta
+    python_ta.check_all(config={
+        'max-line-length': 120
+    })

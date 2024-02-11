@@ -122,7 +122,7 @@ END
 LOCATION 8
 3
 You get in the elevator, the only path out of the basement. It's a quiet and smooth trip this time. Type look for the full description of this location.
-You get in the elevator. It is the only path out of the basement. The buttons in the elevator number 1-8, but you don't have enough time to check all the floors for your pen. To make matters worse, irritating elevator music starts playing through the speakers. As you try to concentrate on making a decision, you realize there's a lot more to this strange song. These are actually instructions. The song playing overhead is actually just one note in different rhythms and tempo, and the whole range of musical notes can be named by single letters A through F, which would correspond to floors 1-8 respectively. Using your perfect pitch, type in the correct number (1-8 inclusive) corresponding to the note playing overhead. # add game commands this one is special because second time u cant get the elevator puzzle again
+You get in the elevator. It is the only path out of the basement. The buttons in the elevator number 1-8, but you don't have enough time to check all the floors for your pen. To make matters worse, irritating elevator music starts playing through the speakers. As you try to concentrate on making a decision, you realize there's a lot more to this strange song. These are actually instructions. The song playing overhead is actually just one note in different rhythms and tempo, and the whole range of musical notes can be named by single letters A through F, which would correspond to floors 1-8 respectively. Using your perfect pitch, type in the correct number (1-8 inclusive) corresponding to the note playing overhead.
 
 Look
 Inventory
