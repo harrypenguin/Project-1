@@ -24,7 +24,7 @@ import pygame
 from game_data import World, Item, Location, Player, Puzzle, InfiniteTriesPuzzle, LimitedTriesPuzzle
 
 
-def play_sound(file_path):
+def play_sound(file_path: str) -> None:
     """
     Puzzle helper function to play a certain pitch.
     """
@@ -63,6 +63,17 @@ if __name__ == "__main__":
     w = World(open("map.txt"), open("locations.txt"), open("items.txt"))
     p = Player(2, 5, w)  # set starting location of player; you may change the x, y coordinates here as appropriate
 
+    print("You've got an important exam coming up this evening, and you've been studying for weeks. Last night was a "
+          "particularly late night on campus. You had difficulty focusing, so rather than staying in one place, "
+          "you studied in various places throughout campus as the night progressed. Unfortunately, when you woke up "
+          "this morning, you were missing some important exam-related items. You cannot find your T-card, and you're "
+          "nervous they won't let you into tonight's exam without it. Also, you seem to have misplaced your lucky "
+          "exam pen -- even if they let you in, you can't possibly write with another pen! Finally, your instructor "
+          "for the course lets you bring a cheat sheet - a handwritten page of information in the exam. Last night, "
+          "you painstakingly crammed as much material onto a single page as humanly possible, but that's missing, "
+          "too! All of this stuff must be around campus somewhere! Can you find all of it before your exam starts "
+          "tonight?")
+
     while not p.victory:
         location = w.get_location(p.x, p.y)
 
@@ -74,9 +85,10 @@ if __name__ == "__main__":
         items_here = [item.name for item in location.items]
         if location.location_number == 14 and all([item in items_here for item in ['Cheat sheet', 'Pen', 'Tcard']]):
             print("You successfully collected all the items for the exam. The doors open and you walk in...")
-            print(f"Game over. Your final score is {p.score}")
+            print(f"You won! Your final score is: {p.score}")
             # The player wins when all required items are brought to exam centre.
             p.victory = True
+            exit()
 
         if location.visited_before:
             print(location.brief_description)
@@ -165,7 +177,7 @@ if __name__ == "__main__":
 
             if choice.upper() == "QUIT":
                 yes_or_no = input("Are you sure you want to end the game? Y/N")
-                if yes_or_no == "Y":
+                if yes_or_no.upper() == "Y":
                     exit()
                 else:
                     continue

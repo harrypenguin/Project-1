@@ -84,9 +84,8 @@ class Location:
 
     def __init__(self, position: list[int, int], score: int, brief_description: str, long_description: str,
                  actions: list[str], items: list[Item], visited_before: bool, location_number: int) -> None:
-        """Initialize a new location.
-
-        # TODO Add more details here about the initialization if needed
+        """
+        Initialize a new location.
         """
 
         self.position = position
@@ -98,7 +97,7 @@ class Location:
         self.visited_before = visited_before
         self.location_number = location_number
 
-    def available_actions(self):
+    def available_actions(self) -> list[str]:
         """
         Return the available actions in this location.
         The actions should depend on the items available in the location
@@ -314,7 +313,7 @@ class Player:
         self.moves = 20
         self.world = world
 
-    def move(self, direction: str):
+    def move(self, direction: str) -> str:
         """
         The method corresponding to movement commands. Takes in a direction "EAST", "WEST", "NORTH", "SOUTH".
         Changes the player's coordinates.
@@ -355,19 +354,19 @@ class Player:
 
         print(f"You have {self.moves} moves left.")
 
-    def get_score(self):
+    def get_score(self) -> None:
         """
         Print the current score of the player.
         """
         print("Your current score is: " + str(self.score))
 
-    def get_moves(self):
+    def get_moves(self) -> None:
         """
         Print the number of moves left.
         """
         print("You have " + str(self.moves) + " moves left.")
 
-    def check_inventory(self):
+    def check_inventory(self) -> None:
         """
         Print information about items currently in the player's inventory.
         """
@@ -376,7 +375,7 @@ class Player:
         else:
             print("In your inventory, you currently have: " + ', '.join([item.name for item in self.inventory]))
 
-    def pickup_item(self, item_name: str):
+    def pickup_item(self, item_name: str) -> None:
         """
         Allows the player to pick up a specified item at the location.
         """
@@ -390,7 +389,7 @@ class Player:
                 return None
         print(f"There's no {item_name} here...")
 
-    def deposit(self, item_name: str):
+    def deposit(self, item_name: str) -> None:
         """
         Deposits something the player is carrying onto the current location.
         """
@@ -440,7 +439,7 @@ class InfiniteTriesPuzzle(Puzzle):
     A Puzzle subclass where the player has infinite attempts to solve the puzzle.
     """
 
-    def attempt_solution(self):
+    def attempt_solution(self) -> bool:
         """
         Allows the player to attempt to solve the puzzle with infinite tries. Returns True when the user solves it.
         """
@@ -471,7 +470,7 @@ class LimitedTriesPuzzle(Puzzle):
         super().__init__(answer)
         self.tries = tries
 
-    def attempt_solution(self):
+    def attempt_solution(self) -> bool:
         """
         Allows the player to attempt to solve the puzzle with a limited number of tries.
         Returns False if the player fails the puzzle.
@@ -494,17 +493,3 @@ class LimitedTriesPuzzle(Puzzle):
             if attempts == self.tries:  # Checks if it's the last attempt
                 print("Sorry, you've used all your attempts. The game will end now.")
                 return False
-
-
-if __name__ == '__main__':
-    import doctest
-    doctest.testmod(verbose=True)
-
-    # When you are ready to check your work with python_ta, uncomment the following lines.
-    # (In PyCharm, select the lines below and press Ctrl/Cmd + / to toggle comments.)
-    # You can use "Run file in Python Console" to run PythonTA,
-    # and then also test your methods manually in the console.
-    import python_ta
-    python_ta.check_all(config={
-        'max-line-length': 120
-    })

@@ -9,7 +9,6 @@ Go [north/south/east/west]
 Pickup
 Deposit [item name]
 Score
-Talk
 Quit
 
 END
@@ -25,7 +24,6 @@ Go [north/south/east/west]
 Pickup
 Deposit [item name]
 Score
-Talk
 Quit
 END
 
@@ -40,7 +38,6 @@ Go [north/south/east/west]
 Pickup
 Deposit [item name]
 Score
-Talk
 Quit
 END
 
@@ -55,7 +52,6 @@ Go [north/south/east/west]
 Pickup
 Deposit [item name]
 Score
-Talk
 Quit
 END
 
@@ -70,7 +66,6 @@ Go [north/south/east/west]
 Pickup
 Deposit [item name]
 Score
-Talk
 Quit
 END
 
@@ -85,7 +80,6 @@ Go [north/south/east/west]
 Pickup
 Deposit [item name]
 Score
-Talk
 Quit
 END
 
@@ -100,7 +94,6 @@ Go [north/south/east/west]
 Pickup
 Deposit [item name]
 Score
-Talk
 Quit
 END
 
@@ -115,7 +108,6 @@ Go [north/south/east/west]
 Pickup
 Deposit [item name]
 Score
-Talk
 Quit
 END
 
@@ -130,7 +122,6 @@ Go [north/south/east/west]
 Pickup
 Deposit [item name]
 Score
-Talk
 Quit
 END
 
@@ -145,7 +136,6 @@ Go [north/south/east/west]
 Pickup
 Deposit [item name]
 Score
-Talk
 Quit
 END
 
@@ -160,7 +150,6 @@ Go [north/south/east/west]
 Pickup
 Deposit [item name]
 Score
-Talk
 Quit
 END
 
@@ -175,7 +164,6 @@ Go [north/south/east/west]
 Pickup
 Deposit [item name]
 Score
-Talk
 Quit
 END
 
@@ -190,7 +178,6 @@ Go [north/south/east/west]
 Pickup
 Deposit [item name]
 Score
-Talk
 Quit
 END
 
@@ -205,7 +192,6 @@ Go [north/south/east/west]
 Pickup
 Deposit [item name]
 Score
-Talk
 Quit
 END
 
@@ -220,7 +206,6 @@ Go [north/south/east/west]
 Pickup
 Deposit [item name]
 Score
-Talk
 Quit
 END
 
@@ -234,7 +219,6 @@ Quit
 Quit command allows player to quit game at any time.
 pick up item
 deposit all/item name
-talk
 would be nice to have a current moves command
 
 Command options:
@@ -246,5 +230,4 @@ pickup: picks up item in the room
 deposit: drop all items
 deposit [item name]: drop specific item
 score: returns your current score
-talk: talk to the character in the room
 quit: quit the game, all progress is lost
